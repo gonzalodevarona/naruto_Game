@@ -5,29 +5,32 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 13 SEPTEMBER 2019
+* @LAST UPDATE DATE: 15 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
 package model;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 
-public class Character {
+public class Ninja implements Serializable {
 	
 	private String name;
 	private GregorianCalendar creationDate;
 	private String personality;
 	private int power;
-	
-	private Jutsu first;
+	private Ninja nextNinja;
+	private Jutsu firstJutsu;
 
-	public Character(String name, GregorianCalendar creationDate, String personality, int power) {
+	public Ninja(String name, GregorianCalendar creationDate, String personality, int power) {
 		super();
 		this.name = name;
 		this.creationDate = creationDate;
 		this.personality = personality;
 		this.power = power;
+		nextNinja = null;
+		firstJutsu = null;
 	}
 
 	public String getName() {
@@ -61,14 +64,45 @@ public class Character {
 	public void setPower(int power) {
 		this.power = power;
 	}
+	
 
-	public Jutsu getFirst() {
-		return first;
+	public Ninja getNextNinja() {
+		return nextNinja;
 	}
 
-	public void setFirst(Jutsu first) {
-		this.first = first;
+	public void setNextNinja(Ninja nextNinja) {
+		this.nextNinja = nextNinja;
 	}
+
+	public Jutsu getFirstJutsu() {
+		return firstJutsu;
+	}
+
+	public void setFirstJutsu(Jutsu firstJutsu) {
+		this.firstJutsu = firstJutsu;
+	}
+	
+	public Jutsu getLastJustu() {
+		Jutsu last = getFirstJutsu();
+		if(last != null) {
+			while(last.getNext() != null) {
+				last = last.getNext();
+			}
+		}
+		return last;
+	}
+	
+	public Jutsu locateJutsu(String nameJutsu) {
+		Jutsu match = getFirstJutsu();
+		
+		while(match != null && match.getName().equalsIgnoreCase(nameJutsu)) {
+			match = match.getNext();
+		}
+		
+		return match;
+	}
+	
+	
 	
 	
 

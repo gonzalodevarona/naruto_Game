@@ -5,16 +5,18 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 13 SEPTEMBER 2019
+* @LAST UPDATE DATE: 15 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
 package model;
 
-public class Clan {
+import java.io.Serializable;
+
+public class Clan implements Serializable {
 	
 	private String name;
-	private Character first;
+	private Ninja first;
 	
 	public Clan(String name) {
 		super();
@@ -29,13 +31,42 @@ public class Clan {
 		this.name = name;
 	}
 
-	public Character getFirst() {
+	public Ninja getFirst() {
 		return first;
 	}
 
-	public void setFirst(Character first) {
+	public void setFirst(Ninja first) {
 		this.first = first;
 	}
+
+	
+	
+	public Ninja getLastNinja() {
+		Ninja last = getFirst();
+		if(last != null) {
+			while(last.getNextNinja() != null) {
+				last = last.getNextNinja();
+			}
+		}
+		return last;
+	}
+	
+	public Ninja findNinja(String nameNinja) {
+		Ninja match = getFirst();
+		
+		while(match != null && match.getName().equalsIgnoreCase(nameNinja)) {
+			match = match.getNextNinja();
+		}
+		
+		return match;
+	}
+	
+	public void addNinja(Ninja newNinja) {
+		Ninja n = getLastNinja();
+		n.setNextNinja(newNinja);
+	}
+	
+	
 	
 	
 	

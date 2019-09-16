@@ -5,13 +5,15 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 13 SEPTEMBER 2019
+* @LAST UPDATE DATE: 15 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
 package model;
 
-public class Jutsu {
+import java.io.Serializable;
+
+public class Jutsu implements Serializable {
 	
 	private String name;
 	private int factor;
@@ -20,6 +22,7 @@ public class Jutsu {
 		super();
 		this.name = name;
 		this.factor = factor;
+		next = null;
 	}
 	public String getName() {
 		return name;
@@ -38,6 +41,10 @@ public class Jutsu {
 	}
 	public void setNext(Jutsu next) {
 		this.next = next;
+	}
+	
+	public void myNewNextIsTheNextOfMyActualNext() { // I HAVE A NOT NULL NEXT  JUTSU AND ITS NEXT IS NOT NULL AS WELL
+		this.next = next.getNext();
 	}
 	
 	
