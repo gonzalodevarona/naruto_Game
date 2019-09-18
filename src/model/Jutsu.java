@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 15 SEPTEMBER 2019
+* @LAST UPDATE DATE: 17 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -13,7 +13,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Jutsu implements Serializable {
+public class Jutsu implements Serializable, Comparable {
 	
 	private String name;
 	private int factor;
@@ -48,6 +48,29 @@ public class Jutsu implements Serializable {
 	}
 	
 	
+	public String toString() {
+		String me = "\n";
+		me += "Name: "+getName()+"\n";
+		me += "Factor: "+getFactor()+"\n";
+		me += "\n";
+		return me;
+	}
+	
+	
+	@Override
+	public int compareTo(Object jutsu) {
+		Jutsu j = (Jutsu)jutsu;
+		int value = 0;
+		 
+    	if(getFactor() > j.getFactor()){
+    		value = 1;
+    	}else if(getFactor() < j.getFactor()){
+    		value = -1;
+    	}
+        return value;
+	}
+	
+	
 	
 
-}
+} //end of class

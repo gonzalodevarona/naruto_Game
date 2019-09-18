@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 15 SEPTEMBER 2019
+* @LAST UPDATE DATE: 17 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -53,18 +53,64 @@ public class Clan implements Serializable {
 	
 	public Ninja findNinja(String nameNinja) {
 		Ninja match = getFirst();
+		boolean stop = false;
 		
-		while(match != null && match.getName().equalsIgnoreCase(nameNinja)) {
-			match = match.getNextNinja();
+		while(match != null && !stop) {
+			if (match.getName().equalsIgnoreCase(nameNinja)) {
+				stop = true;
+			} else {match = match.getNextNinja();
+			}
+			
 		}
 		
 		return match;
 	}
 	
 	public void addNinja(Ninja newNinja) {
-		Ninja n = getLastNinja();
-		n.setNextNinja(newNinja);
+		Ninja ninInMatter = getFirst();
+		boolean stop = false;
+		
+		while(!stop && ninInMatter != null) {
+			if (ninInMatter.getNextNinja() != null && ninInMatter.compareTo(newNinja) <0 && ninInMatter.getNextNinja().compareTo(newNinja) >0) {
+				newNinja.setNextNinja(ninInMatter.getNextNinja());
+				newNinja.setPriorNinja(ninInMatter);
+				ninInMatter.setNextNinja(newNinja);
+				ninInMatter.getNextNinja().setPriorNinja(newNinja);
+				stop = true;
+			} else if (ninInMatter.getNextNinja() == null && ninInMatter.compareTo(newNinja) <0 ) {
+				getLastNinja().setNextNinja(newNinja);
+				stop = true;
+			} else if (ninInMatter.getNextNinja() == null && ninInMatter.compareTo(newNinja) >0 ) {
+				getLastNinja().setPriorNinja(newNinja);
+				setFirst(newNinja);
+				stop = true;
+			} else {
+				ninInMatter = ninInMatter.getNextNinja();
+				
+			}
+			
+		}
+		
+		if(ninInMatter == null) {
+			setFirst(newNinja);
+		} 
+		
+		
 	}
+	
+	public String toString() {
+		String me = "\n";
+		me += "Name: "+getName()+"\n";
+		me += "\n";
+		return me;
+	}
+	
+	public void eraseNinja(Ninja death) {
+		death.getNextNinja().myNewPriorIsPriorOfMyActualPrior();
+		death.getPriorNinja().myNewNextIsTheNextOfMyActualNext();
+	}
+	
+	
 	
 	
 	

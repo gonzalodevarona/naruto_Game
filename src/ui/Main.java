@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 15 SEPTEMBER 2019
+* @LAST UPDATE DATE: 17 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -836,21 +836,17 @@ public class Main {
 
 	public void addJutsu(Character character) {
 			try {
-				System.out.println("REGISTER PET (every client must have at least one pet to be in a club)");
+				System.out.println("REGISTER JUTSU");
 				System.out.println("");
 				System.out.println("");
-				System.out.print("Please type the pet's ID: "); int id = reader.nextInt(); reader.nextLine();
 				
-				System.out.print("Please type the pet's name: "); String nameP = reader.nextLine();
-			
-				System.out.print("Please write the pet's type: "); String typeP = reader.nextLine();
-				System.out.println("Please select the pet's gender: ");
-				System.out.println("1. Male.");
-				System.out.println("2. Female.");
+				System.out.print("Please write the jutsu's name: "); String nameP = reader.nextLine();
+				System.out.print("Please type the the jutsu's power: "); int power = reader.nextInt(); reader.nextLine();
+				
 				int selection = reader.nextInt(); reader.nextLine();
-				char gender = Pet.MALE;
 				
-				if (selection ==1 || selection ==2 ) {
+				
+				if () {
 					if (selection ==2) {
 						gender = Pet.FEMALE;
 					}
@@ -938,59 +934,57 @@ public class Main {
 					
 					System.out.print("Please type the new ninja's name: "); String name = reader.nextLine();
 					if(myClan.findNinja(name) != null) {
-					System.out.print("Please type the new ninja's personality: "); String personality = reader.nextLine();
-					System.out.print("Please type the new ninja's power: "); int power = reader.nextInt(); reader.nextLine();
-					
-					System.out.println("");
-					System.out.print("Please type the new ninja's creation day: "); int day = reader.nextInt(); reader.nextLine();
-					System.out.print("Please type the new ninja's creation month: "); int month = reader.nextInt(); reader.nextLine();
-					System.out.print("Please type the new ninja's creation year: "); int year = reader.nextInt(); reader.nextLine();
-					System.out.println("");
-					month = month -1;
-					
-					GregorianCalendar now = new GregorianCalendar();
-					GregorianCalendar birthDate = new GregorianCalendar(year, month, day);
-					System.out.println("");
-					
-					if(birthDate.compareTo(now) <= 0 && year>=1970) {
-						if(!(name.equals("")) && !(personality.equals("")) ){
-							
+						System.out.print("Please type the new ninja's personality: "); String personality = reader.nextLine();
+						System.out.print("Please type the new ninja's power: "); int power = reader.nextInt(); reader.nextLine();
+						
+						System.out.println("");
+						System.out.print("Please type the new ninja's creation day: "); int day = reader.nextInt(); reader.nextLine();
+						System.out.print("Please type the new ninja's creation month: "); int month = reader.nextInt(); reader.nextLine();
+						System.out.print("Please type the new ninja's creation year: "); int year = reader.nextInt(); reader.nextLine();
+						System.out.println("");
+						month = month -1;
+						
+						GregorianCalendar now = new GregorianCalendar();
+						GregorianCalendar birthDate = new GregorianCalendar(year, month, day);
+						System.out.println("");
+						
+						if(birthDate.compareTo(now) <= 0 && year>=1970) {
+							if(!(name.equals("")) && !(personality.equals("")) ){
+								
 								Ninja theNew = new Ninja(name, birthDate, personality, power);
-								myClan.addClient(theNew);
-								addPet(theNew);
+								myClan.addNinja(theNew);
+								
 								System.out.println("*******************************************\n");
 								System.out.println("* New client has been successfully added! *\n");
 								System.out.println("*******************************************\n");
 									
-								}				
-							
-							
-							
-									
+							}				
+											
+						} else {
+							System.out.println("");
+							System.out.println("ERROR: Invalid birth date.");
+							System.out.println("");
+							}
+				
 					} else {
 						System.out.println("");
-						System.out.println("ERROR: Invalid birth date.");
+						System.out.println("ERROR: Ninja already exists in that clan.");
 						System.out.println("");
-						
+						}
+					
+				} else {
+					System.out.println("");
+					System.out.println("ERROR: Club not found.");
+					System.out.println("");
 					}
-				
-			} else {
-				System.out.println("");
-				System.out.println("ERROR: Club not found.");
-				System.out.println("");
-				} 
 			
 		} catch (InputMismatchException e) {
 			System.out.println("");
 			System.out.println("ERROR: Wrong data type.");
 			System.out.println("");
-			
-		} catch (NumberFormatException e) {
-			System.out.println("");
-			System.out.println("ERROR: Wrong data type.");
-			System.out.println("");
-		}
-		}
+			}
+		
+	}
 			
 		
 		
@@ -1005,7 +999,7 @@ public class Main {
 					Clan theNew = new Clan( name);
 					investor.addClan(theNew);
 					System.out.println("*****************************************\n");
-					System.out.println("* New club has been successfully added! *\n");
+					System.out.println("* New clan has been successfully added! *\n");
 				 	System.out.println("*****************************************\n");
 						
 					
