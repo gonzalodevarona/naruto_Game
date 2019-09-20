@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 17 SEPTEMBER 2019
+* @LAST UPDATE DATE: 19 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -93,7 +93,7 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 		this.priorNinja = priorNinja;
 	}
 
-	public Jutsu getLastJustu() {
+	public Jutsu getLastJutsu() {
 		Jutsu last = getFirstJutsu();
 		if(last != null) {
 			while(last.getNext() != null) {
@@ -175,8 +175,17 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 		if (prior != null) {
 			prior.myNewNextIsTheNextOfMyActualNext();
 		} else {
-			setFirstJutsu(null);
+			if(j.getNext() != null) {
+				setFirstJutsu(j.getNext());
+			} else {
+				setFirstJutsu(null);
+			}
+			
 		}
+	}
+	
+	public void addJutsu(Jutsu newJutsu) {
+		getLastJutsu().setNext(newJutsu);
 	}
 	
 	

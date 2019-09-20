@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 17 SEPTEMBER 2019
+* @LAST UPDATE DATE: 19 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -23,12 +23,12 @@ import java.util.ArrayList;
 public class Investor {
 	
 	private String name;
-	private ArrayList<Clan> clans;
+	private Clan firstClan;
 	
 	public Investor() {
 		super();
 		name = "Gonzalo De Varona";
-		clans = new ArrayList<Clan>();
+		firstClan = null;
 	}
 
 	public String getName() {
@@ -39,16 +39,33 @@ public class Investor {
 		this.name = name;
 	}
 
-	public ArrayList<Clan> getClans() {
-		return clans;
+	
+	public Clan getFirstClan() {
+		return firstClan;
 	}
 
-	public void setClans(ArrayList<Clan> clans) {
-		this.clans = clans;
+	public void setFirstClan(Clan firstClan) {
+		this.firstClan = firstClan;
+	}
+
+	public void addClan(Clan clan) {
+		Clan ls = getLastClan();
+		if (ls != null) {
+			ls.setNextClan(clan);
+		
+		}else {
+			setFirstClan(clan);
+		}
 	}
 	
-	public void addClan(Clan clan) {
-		clans.add(clan);
+	public Clan getLastClan() {
+		Clan last = getFirstClan();
+		if(last != null) {
+			while(last.getNextClan() != null) {
+				last = last.getNextClan();
+			}
+		}
+		return last;
 	}
 	
 	public void saveChanges() throws FileNotFoundException, IOException {
@@ -56,7 +73,7 @@ public class Investor {
 		file = new File(getName());
 		
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-		oos.writeObject(getClans());
+		oos.writeObject(getFirstClan());
 		oos.close();
 			
 		
@@ -69,23 +86,28 @@ public class Investor {
 		
 		if (file.exists()) {
 			ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-			setClans((ArrayList<Clan>) ois.readObject());
+			setFirstClan((Clan) ois.readObject());
 			ois.close();
 			done = true;
 		}
 		return done;
 	}
 
-	public Clan findClan(String name1) {
-		Clan clann = null;
+	public Clan findClan(String nameClan) {
+		Clan match = getFirstClan();
 		boolean stop = false;
-		for (int i = 0; i < clans.size() && !stop; i++) {
-			if(name1.equalsIgnoreCase(clans.get(i).getName())){
-				clann = clans.get(i);
+		
+		while(match != null && !stop) {
+			if (match.getName().equalsIgnoreCase(nameClan)) {
 				stop = true;
+			} else {match = match.getNextClan();
 			}
+			
 		}
-		return clann;
+		
+		return match;
 	}
+
+	
 
 } //end of class

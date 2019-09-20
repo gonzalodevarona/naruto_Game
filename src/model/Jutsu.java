@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 17 SEPTEMBER 2019
+* @LAST UPDATE DATE: 19 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -13,7 +13,7 @@ package model;
 
 import java.io.Serializable;
 
-public class Jutsu implements Serializable, Comparable {
+public class Jutsu implements Serializable, Comparable<Jutsu> {
 	
 	private String name;
 	private int factor;
@@ -58,13 +58,13 @@ public class Jutsu implements Serializable, Comparable {
 	
 	
 	@Override
-	public int compareTo(Object jutsu) {
-		Jutsu j = (Jutsu)jutsu;
+	public int compareTo(Jutsu jutsu) {
+		
 		int value = 0;
 		 
-    	if(getFactor() > j.getFactor()){
+    	if(getFactor() > jutsu.getFactor()){
     		value = 1;
-    	}else if(getFactor() < j.getFactor()){
+    	}else if(getFactor() < jutsu.getFactor()){
     		value = -1;
     	}
         return value;
