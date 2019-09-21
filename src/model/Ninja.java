@@ -105,9 +105,14 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 	
 	public Jutsu locateJutsu(String nameJutsu) {
 		Jutsu match = getFirstJutsu();
+		boolean stop = false;
 		
-		while(match != null && match.getName().equalsIgnoreCase(nameJutsu)) {
-			match = match.getNext();
+		while(match != null && !stop) {
+			if (match.getName().equalsIgnoreCase(nameJutsu)) {
+				stop = true;
+			} else {match = match.getNext();
+			}
+			
 		}
 		
 		return match;
@@ -185,7 +190,10 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 	}
 	
 	public void addJutsu(Jutsu newJutsu) {
-		getLastJutsu().setNext(newJutsu);
+		if(getLastJutsu() == null) {
+			setFirstJutsu(newJutsu);
+		} else {getLastJutsu().setNext(newJutsu);}
+		
 	}
 	
 	

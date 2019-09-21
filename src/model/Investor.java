@@ -22,6 +22,8 @@ import java.util.ArrayList;
 
 public class Investor {
 	
+	public final static String LOCATION = "data/Gonzalo De Varona";
+	
 	private String name;
 	private Clan firstClan;
 	
@@ -70,7 +72,7 @@ public class Investor {
 	
 	public void saveChanges() throws FileNotFoundException, IOException {
 		File file = null;
-		file = new File(getName());
+		file = new File(LOCATION);
 		
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(getFirstClan());
@@ -81,7 +83,7 @@ public class Investor {
 	
 	public boolean loadChanges() throws FileNotFoundException, IOException, ClassNotFoundException {
 		boolean done = false;
-		File file = new File(getName());
+		File file = new File(LOCATION);
 		
 		
 		if (file.exists()) {
@@ -106,6 +108,23 @@ public class Investor {
 		}
 		
 		return match;
+	}
+	
+	public void eraseClan(Clan death) {
+			
+		Clan prior = death.getPriorClan();
+		Clan next = death.getNextClan();
+			
+		if (prior != null) {
+			if(next != null) {
+				next.setPriorClan(prior);	
+			} 
+			prior.setNextClan(next);
+			
+		} else {
+			setFirstClan(next);
+			
+		}
 	}
 
 	

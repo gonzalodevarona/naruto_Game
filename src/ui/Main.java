@@ -136,17 +136,17 @@ public class Main {
 						break;
 	
 						
-					//SEARCH A CLUB BY A GIVEN FIELD
+					//SEARCH A CLAN BY NAME
 					case 7: 
 						searchClan();
 						break;
 						
-					//SEARCH A CLIENT IN A CLUB BY A GIVEN FIELD
+					//SEARCH A NINJA BY NAME
 					case 8: 
 						searchNinja();
 						break;
 						
-					//SEARCH A PET FROM A CLIENT IN A CLUB BY A GIVEN FIELD
+					//SEARCH A JUTSU FROM A NINJA IN A CLAN BY NAME
 					case 9: 
 						searchJutsu();
 						break;
@@ -286,7 +286,7 @@ public class Main {
 		try {
 			
 			
-			System.out.print("Please type the clan's name of the jutsu's owner to delete: "); String id = reader.nextLine();
+			System.out.print("Please type the clan's name of the jutsu's user to delete: "); String id = reader.nextLine();
 			System.out.println("");
 			Clan myClan = investor.findClan(id);
 					
@@ -299,7 +299,7 @@ public class Main {
 							
 						if (ninja != null) {
 							System.out.println("");
-							System.out.println("Find the pet to delete by ID or name:");
+							
 						
 							Jutsu j = null;
 							
@@ -398,12 +398,12 @@ public class Main {
 				myClan = investor.findClan(name);
 				
 					if (myClan != null) {
-						System.out.println("* WARNING * Are you sure you want to delete the club? Every client and pet contained to this club will be deleted as well.");
+						System.out.println("* WARNING * Are you sure you want to delete the clan? Every ninja and jutsu contained in this clan will be deleted as well.");
 						System.out.println("1. Yes.");
 						System.out.println("2. No.");
 						int desition = reader.nextInt(); reader.nextLine();
 						if (desition == 1) {
-							myClan.deleteClan();
+							investor.eraseClan(myClan);
 							System.out.println("");
 							System.out.println("Clan successfully deleted");
 							System.out.println("");
@@ -492,7 +492,7 @@ public class Main {
 				if (myClan != null) {
 					
 					System.out.print("Please type the new ninja's name: "); String name = reader.nextLine();
-					if(myClan.findNinja(name) != null) {
+					if(myClan.findNinja(name) == null) {
 						System.out.print("Please type the new ninja's personality: "); String personality = reader.nextLine();
 						System.out.print("Please type the new ninja's power: "); int power = reader.nextInt(); reader.nextLine();
 						
@@ -533,7 +533,7 @@ public class Main {
 					
 				} else {
 					System.out.println("");
-					System.out.println("ERROR: Club not found.");
+					System.out.println("ERROR: Clan not found.");
 					System.out.println("");
 					}
 			

@@ -88,68 +88,12 @@ public class Clan implements Serializable {
 	}
 	
 	public void addNinja(Ninja newNinja) {
-		getLastNinja().setNextNinja(newNinja);
-	}
-	
-	public void deleteClan() {
-		if (getNextClan() != null ) {
-			
-		}
+		if(getLastNinja() == null) {
+			setFirst(newNinja);
+		} else {getLastNinja().setNextNinja(newNinja);}
 		
 	}
 	
-//	public void addNinja(Ninja newNinja) {
-//		Ninja ninInMatter = getFirst();
-//		boolean stop = false;
-//		
-//		if(ninInMatter == null) {
-//			setFirst(newNinja);
-//			stop = true;
-//		}
-//		
-//		while(!stop && ninInMatter != null) {
-//			if (ninInMatter.getNextNinja() != null && ninInMatter.compareTo(newNinja) <0 && ninInMatter.getNextNinja().compareTo(newNinja) >0) {
-//				newNinja.setNextNinja(ninInMatter.getNextNinja());
-//				newNinja.setPriorNinja(ninInMatter);
-//				ninInMatter.getNextNinja().setPriorNinja(newNinja);
-//				ninInMatter.setNextNinja(newNinja);	
-//				stop = true;
-//			} else if (ninInMatter.getNextNinja() == null) {
-//				if (ninInMatter.compareTo(newNinja) <0) {
-//					getLastNinja().setNextNinja(newNinja);
-//					
-//				} else {
-//					getLastNinja().setPriorNinja(newNinja);
-//					setFirst(newNinja);
-//					
-//				}
-//				stop = true;
-//				
-//			} else if (ninInMatter.getPriorNinja() == null) {
-//				if (ninInMatter.compareTo(newNinja) <0) {
-//					newNinja.setNextNinja(getFirst().getNextNinja());
-//					newNinja.setPriorNinja(getFirst());
-//					getFirst().getNextNinja().setPriorNinja(newNinja);
-//					getFirst().setNextNinja(newNinja);
-//					
-//					
-//				} else {
-//					newNinja.setNextNinja(getFirst());
-//					getFirst().setPriorNinja(newNinja);
-//					
-//					setFirst(newNinja);
-//					
-//				}
-//				stop = true;
-//				
-//			}  else {
-//				ninInMatter = ninInMatter.getNextNinja();
-//				
-//			}
-//			
-//		}	
-//		
-//	}
 	
 	
 	public String toString() {
@@ -161,28 +105,20 @@ public class Clan implements Serializable {
 	
 	
 	public void eraseNinja(Ninja death) {
-//		
-//		Ninja prior = death.getPriorNinja();
-//		Ninja next = death.getNextNinja();
-//		
-//		if (prior != null) {
-//			if(next != null) {
-//				setFirstJutsu(j.getNext());
-//			} else {
-//				
-//				
-//			}
-//			
-//			next.setPriorNinja(prior);
-//			prior.myNewNextIsTheNextOfMyActualNext();
-//		} else {
-//			if(j.getNext() != null) {
-//				setFirstJutsu(j.getNext());
-//			} else {
-//				setFirstJutsu(null);
-//			}
-//			
-//		}
+		
+		Ninja prior = death.getPriorNinja();
+		Ninja next = death.getNextNinja();
+		
+		if (prior != null) {
+			if(next != null) {
+				next.setPriorNinja(prior);	
+			} 
+			prior.setNextNinja(next);
+			
+		} else {
+			setFirst(next);
+			
+		}
 	}
 	
 	
