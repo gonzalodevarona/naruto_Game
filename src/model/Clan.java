@@ -5,15 +5,16 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 19 SEPTEMBER 2019
+* @LAST UPDATE DATE: 22 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
 package model;
 
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 
-public class Clan implements Serializable {
+public class Clan implements Serializable, Comparable<Clan> {
 	
 	private String name;
 	private Ninja first;
@@ -120,14 +121,106 @@ public class Clan implements Serializable {
 			
 		}
 	}
+
+	@Override
+	public int compareTo(Clan cl) {
+		int value = 0;
+		if (getName().compareTo(cl.getName()) > 0) {
+			value = 1;
+		} else if (getName().compareTo(cl.getName()) < 0) {
+			value = -1;
+		}
+		return value;
+	}
+	
+	public Clan clone() {
+		Clan other = new Clan("");
+		
+		other.setName(getName());
+		other.setNextClan(getNextClan());
+		other.setPriorClan(getPriorClan());
+		other.setFirst(getFirst());
+		
+		
+		return other;
+	}
 	
 	
+	public Clan smallerThan() {
+		Clan smaller = null;
+		Clan following = getNextClan();
+		
+		while(following != null) {
+		
+			if (compareTo(following) >0) {
+				smaller = following;
+			}
+			following = following.getNextClan();
+		}
+		
+		
+		return smaller;
+	}
 	
 	
+	public String printNinjasOrganized() {
+		ninjasSortedSelection();
+		String everything = "";
+		
+		Ninja match = getFirst();
+		
+		if (match == null) {
+			everything = "ERROR: There are 0 ninjas in this clan";
+		}
+		
+		while(match != null ) {
+			everything += match.toString();	
+			match = match.getNextNinja();
+		}
+		
+		return everything;
+	}
+
+	public void ninjasSortedSelection() {
+		Ninja match = getLastNinja();
+		Ninja firstN = getFirst();
+		
+		while(match != null ) {
+			
+			while(firstN != null) {
+				if(firstN.getNextNinja() != null && firstN.compareTo(firstN.getNextNinja()) > 0) {
+					switchPositions(firstN, firstN.getNextNinja());
+				}
+				
+				firstN = firstN.getNextNinja();
+			}
+			
+					
+			match = match.getPriorNinja();
+		}
+			
+			
+	}
+	
+	public void switchPositions(Ninja match, Ninja smaller) {
+		
+		Ninja tempM = match.clone();
+		Ninja tempS = smaller.clone();
+		
+		match.setName(tempS.getName());
+		match.setCreationDate(tempS.getCreationDate());
+		match.setPersonality(tempS.getPersonality());
+		match.setPower(tempS.getPower());
+		
+		smaller.setName(tempM.getName());
+		smaller.setCreationDate(tempM.getCreationDate());
+		smaller.setPersonality(tempM.getPersonality());
+		smaller.setPower(tempM.getPower());
+		
+		
+	}
 	
 	
-	
-	
-	
+		
 
 } // end of class

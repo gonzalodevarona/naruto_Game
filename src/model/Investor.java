@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 19 SEPTEMBER 2019
+* @LAST UPDATE DATE: 22 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -126,6 +126,79 @@ public class Investor {
 			
 		}
 	}
+	
+	public boolean isThisNinjaInProgram(String nameN) {
+		boolean stop = false;
+		Clan match = getFirstClan();
+		
+		while(match != null && !stop) {
+			if (match.findNinja(nameN) != null) {
+				stop = true;
+			} else {match = match.getNextClan();
+			}
+			
+		}
+		
+		return stop;
+	}
+	
+	public void clansSortedSelection() {
+		Clan match = getFirstClan();
+		Clan smaller = null;
+		
+		while(match != null ) {
+			smaller = match.smallerThan();
+
+			if(smaller != null) {
+				
+				switchPositions(match, smaller);
+			}
+			
+			match = match.getNextClan();
+		}
+		
+	}
+	
+	
+	
+	
+	public void switchPositions(Clan match, Clan smaller) {
+		
+		Clan tempM = match.clone();
+		Clan tempS = smaller.clone();
+		
+		match.setName(tempS.getName());
+		match.setFirst(tempS.getFirst());
+		
+		smaller.setName(tempM.getName());
+		smaller.setFirst(tempM.getFirst());
+		
+	}
+
+	public String printClansOrganized() {
+		clansSortedSelection();
+		String everything = "";
+		
+		Clan match = getFirstClan();
+		
+		if (match == null) {
+			everything = "ERROR: There are 0 clans";
+		}
+		
+		while(match != null ) {
+			everything += match.toString();
+			
+			match = match.getNextClan();
+			
+			
+		}
+		
+		
+		return everything;
+		
+	}
+
+	
 
 	
 

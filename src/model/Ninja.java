@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 19 SEPTEMBER 2019
+* @LAST UPDATE DATE: 22 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -154,7 +154,7 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 		} else if (getName().compareTo(nin.getName()) < 0) {
 			value = -1;
 		}
-		return 0;
+		return value;
 	}
 	
 	public Jutsu findPrior(Jutsu actual) {
@@ -195,6 +195,51 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 		} else {getLastJutsu().setNext(newJutsu);}
 		
 	}
+
+//	public String printJutsusOrganized() {
+//		
+//		jutsusSortedInsertion();
+//		String everything = "";
+//		
+//		Jutsu match = getFirstJutsu();
+//		
+//		if (match == null) {
+//			everything = "ERROR: There are 0 jutsus";
+//		}
+//		
+//		while(match != null ) {
+//			everything += match.toString();
+//			
+//			match = match.getNext();
+//			
+//			
+//		}
+//		
+//		return everything;
+//	}
+
+//	public void jutsusSortedInsertion() {
+//		
+//		
+//	}
+	
+	
+	public Ninja clone() {
+		Ninja other = new Ninja("", null, "", 0);
+		
+		other.setName(getName());
+		other.setCreationDate(getCreationDate());
+		other.setPersonality(getPersonality());
+		other.setPower(getPower());
+		other.setNextNinja(getNextNinja());
+		other.setPriorNinja(getPriorNinja());
+		other.setFirstJutsu(getFirstJutsu());
+		
+		
+		
+		return other;
+	}
+	
 	
 	
 
