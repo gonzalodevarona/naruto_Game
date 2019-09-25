@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 22 SEPTEMBER 2019
+* @LAST UPDATE DATE: 24 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -13,12 +13,14 @@
 package ui;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import model.*;
+import model.Clan;
+import model.Investor;
+import model.Jutsu;
+import model.Ninja;
 
 public class Main {
 	
@@ -43,19 +45,21 @@ public class Main {
 	public void showMenuOptions(){
 		System.out.println("");
 		System.out.println("1. Register a new clan.");
-		System.out.println("2. Register a new character.");
-		System.out.println("3. Add a jutsu to an existing character in a clan.");
+		System.out.println("2. Register a new ninja.");
+		System.out.println("3. Add a jutsu to an existing ninja in a clan.");
 		System.out.println("4. Erase a clan.");
 		System.out.println("5. Erase a character from a clan.");
-		System.out.println("6. Erase a jutsu from a character.");
+		System.out.println("6. Erase a jutsu from a ninja.");
 		System.out.println("7. Search a clan by name.");
 		System.out.println("8. Search a ninja in a clan by name.");
 		System.out.println("9. Search a jutsu from a ninja in a clan by name.");
 		System.out.println("10.Sort clans by name.");
 		System.out.println("11.Sort ninjas in a clan, by name.");
 		System.out.println("12.Sort a jutsu from a ninja in a clan, by power.");
-		System.out.println("13.QUIT PROGRAM");
-		
+		System.out.println("13.Edit a clan.");
+		System.out.println("14.Edit a ninja from a clan.");
+		System.out.println("15.Edit a jutsu from a ninja.");
+		System.out.println("16.QUIT PROGRAM");
 		System.out.println("");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -94,7 +98,7 @@ public class Main {
 		System.out.println("                                                                   ");                                                      
 	
 
-		while (userInput != 13){
+		while (userInput != 16){
 
 			showMenuOptions();
 
@@ -169,14 +173,29 @@ public class Main {
 						sortJutsus();
 						break;
 						
-					//QUIT PROGRAM
+					//MODIFY CLAN
 					case 13: 
+						modifyClan();
+						break;
+						
+					//MODIFY NINJA
+					case 14: 
+						modifyNinja();
+						break;
+						
+					//MODIFY JUTSU
+					case 15: 
+						modifyJutsu();
+						break;
+						
+					//QUIT PROGRAM
+					case 16: 
 						theGoodbye();
 						break;
 	
 					default:
 						System.out.println();
-						System.out.println("Please type a number between 1 and 15");
+						System.out.println("Please type a number between 1 and 16");
 						System.out.println();
 						break;
 					
@@ -210,7 +229,7 @@ public class Main {
 					System.out.println("Jutsus from "+n.getName()+" organized by name (low-high)");
 					System.out.println();
 					System.out.println();
-					//System.out.println(n.printJutsusOrganized());
+					System.out.println(n.printJutsusOrganized());
 				} else {
 					System.out.println("");
 					System.out.println("ERROR: Ninja not found");
@@ -266,8 +285,14 @@ public class Main {
 	public void searchClan() {
 		try {
 			System.out.println("Please type the name of the clan: "); String stuff = reader.nextLine();
+			System.out.println();
 			
+			long first1 = System.nanoTime();
 			Clan c = investor.findClan( stuff);
+			long second2 = System.nanoTime();
+			long finalT2 = second2- first1;
+			System.out.println("Time for searching a clan in nanoseconds: "+finalT2);
+			System.out.println();
 			if (c != null) {
 				System.out.println(c.toString());
 				
@@ -295,7 +320,14 @@ public class Main {
 			if (c != null) {
 				System.out.println("Please type the name of the ninja: "); String name = reader.nextLine();
 				
+				long first1 = System.nanoTime();
 				Ninja n = c.findNinja(name);
+				long second2 = System.nanoTime();
+				long finalT2 = second2- first1;
+				System.out.println("Time for searching a ninja in nanoseconds: "+finalT2);
+				System.out.println();
+				
+				
 				if (n != null) {
 					System.out.println(n.toString());
 					
@@ -333,7 +365,14 @@ public class Main {
 					
 					System.out.println("Please type the name of the jutsu: "); String nameJutsu = reader.nextLine();
 					
+					long first1 = System.nanoTime();
 					Jutsu j = n.locateJutsu(nameJutsu);
+					long second2 = System.nanoTime();
+					long finalT2 = second2- first1;
+					System.out.println("Time for searching a jutsu in nanoseconds: "+finalT2);
+					System.out.println();
+					
+					
 					if (j != null) {
 						System.out.println(j.toString());
 						
@@ -365,6 +404,211 @@ public class Main {
 	}
 	
 	
+	
+	public void modifyClan() {
+		try {
+			System.out.println("Please type the name of the clan: "); String stuff = reader.nextLine();
+			System.out.println();
+			
+			
+			Clan c = investor.findClan( stuff);
+			if (c != null) {
+				System.out.print("Please type the new clan's name: "); String name = reader.nextLine();
+				if (!(name.equalsIgnoreCase(""))) {
+					c.setName(name);
+					System.out.println("Name changed!");
+					System.out.println("");
+				}
+			
+				
+			} else {
+				System.out.println("");
+				System.out.println("ERROR: Clan not found");
+				System.out.println("");
+				}
+			
+		} catch (InputMismatchException e) {
+			System.out.println("");
+			System.out.println("ERROR: Wrong data type.");
+			System.out.println("");
+		}
+	}
+	
+	
+	public void modifyNinja() {
+		try {
+			System.out.println("Please type the name of the clan: "); String stuff = reader.nextLine();
+			
+			Clan c = investor.findClan( stuff);
+			if (c != null) {
+				System.out.println("Please type the name of the ninja: "); String name = reader.nextLine();
+				
+				Ninja n = c.findNinja(name);
+				
+				if (n != null) {
+					
+					System.out.print("What would you like to change from "+n.getName()+"?");
+					System.out.println("select one");
+					System.out.println("");
+					System.out.println("1. Name");
+					System.out.println("2. Creation date");
+					System.out.println("3. Personality");
+					System.out.println("4. Power");
+					int selection = reader.nextInt(); reader.nextLine();
+					
+						switch (selection) {
+						case 1:
+							System.out.print("Please type the new ninja's name: "); String nameN = reader.nextLine();
+							if (!(nameN.equalsIgnoreCase(""))) {
+								n.setName(nameN);
+								System.out.println("Name changed!");
+								System.out.println("");
+							}
+							break;
+							
+						case 2:
+							System.out.print("Please type the new ninja's creation day: "); int day = reader.nextInt(); reader.nextLine();
+							System.out.print("Please type the new ninja's creation month: "); int month = reader.nextInt(); reader.nextLine();
+							System.out.print("Please type the new ninja's creation year: "); int year = reader.nextInt(); reader.nextLine();
+							System.out.println("");
+							month = month -1;
+							
+							GregorianCalendar now = new GregorianCalendar();
+							GregorianCalendar birthDate = new GregorianCalendar(year, month, day);
+							System.out.println("");
+							
+							if(birthDate.compareTo(now) <= 0 && year>=1970) {
+								n.setCreationDate(birthDate);
+								System.out.println("Creation date changed!");
+								System.out.println("");
+							} else {
+								System.out.println("");
+								System.out.println("ERROR: Invalid creation date.");
+								System.out.println("");
+								}
+							break;
+							
+						case 3:
+							System.out.print("Please type the new ninja's personality: "); String personality = reader.nextLine();
+							
+							n.setPersonality(personality);
+							System.out.println("Personality changed!");
+							System.out.println("");
+							
+							
+							break;
+							
+						case 4:
+							System.out.print("Please type the new ninja's power: "); int power = reader.nextInt(); reader.nextLine();
+							
+							n.setPower(power);
+							System.out.println("Power changed!");
+							System.out.println("");
+							
+							
+							break;
+
+						default:
+							System.out.println("");
+							System.out.println("ERROR: Invalid selection");
+							System.out.println("");
+							break;
+						}
+					
+					
+					
+				} else {
+					System.out.println("");
+					System.out.println("ERROR: Ninja not found");
+					System.out.println("");
+					}
+				
+			} else {
+				System.out.println("");
+				System.out.println("ERROR: Clan not found");
+				System.out.println("");
+				}
+			
+		} catch (InputMismatchException e) {
+			System.out.println("");
+			System.out.println("ERROR: Wrong data type.");
+			System.out.println("");
+		}
+	}
+	
+	public void modifyJutsu() {
+		try {
+			System.out.println("Please type the name of the clan: "); String stuff = reader.nextLine();
+			
+			Clan c = investor.findClan( stuff);
+			if (c != null) {
+				System.out.println("Please type the name of the ninja: "); String name = reader.nextLine();
+				
+				Ninja n = c.findNinja(name);
+				if (n != null) {
+					
+					System.out.println("Please type the name of the jutsu: "); String nameJutsu = reader.nextLine();
+					
+					
+					Jutsu j = n.locateJutsu(nameJutsu);
+					
+					
+					if (j != null) {
+						System.out.print("What would you like to change from "+j.getName()+"?");
+						System.out.println("select one");
+						System.out.println("");
+						System.out.println("1. Name");
+						System.out.println("2. Factor");
+						int selection = reader.nextInt(); reader.nextLine();
+						
+						switch (selection) {
+						case 1:
+							System.out.print("Please type the new jutsu's name: "); String nameN = reader.nextLine();
+							if (!(nameN.equalsIgnoreCase(""))) {
+								j.setName(nameN);
+								System.out.println("Name changed!");
+								System.out.println("");
+							}
+							
+							break;
+						case 2:
+							System.out.print("Please type the new jutsu's factor: "); int power = reader.nextInt(); reader.nextLine();
+							
+							j.setFactor(power);
+							System.out.println("Factor changed!");
+							System.out.println("");
+							break;
+						default:
+							System.out.println("");
+							System.out.println("ERROR: Invalid selection");
+							System.out.println("");
+							break;
+						}
+						
+					} else {
+						System.out.println("");
+						System.out.println("ERROR: Jutsu not found");
+						System.out.println("");
+						}
+					
+				} else {
+					System.out.println("");
+					System.out.println("ERROR: Ninja not found");
+					System.out.println("");
+					}
+				
+			} else {
+				System.out.println("");
+				System.out.println("ERROR: Clan not found");
+				System.out.println("");
+				}
+			
+		} catch (InputMismatchException e) {
+			System.out.println("");
+			System.out.println("ERROR: Wrong data type.");
+			System.out.println("");
+		}
+	}
 	
 	
 	
@@ -608,7 +852,7 @@ public class Main {
 												
 							} else {
 								System.out.println("");
-								System.out.println("ERROR: Invalid birth date.");
+								System.out.println("ERROR: Invalid creation date.");
 								System.out.println("");
 								}
 					

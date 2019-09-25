@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 22 SEPTEMBER 2019
+* @LAST UPDATE DATE: 24 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -147,12 +147,12 @@ public class Clan implements Serializable, Comparable<Clan> {
 	
 	
 	public Clan smallerThan() {
-		Clan smaller = null;
+		Clan smaller = clone();
 		Clan following = getNextClan();
 		
 		while(following != null) {
 		
-			if (compareTo(following) >0) {
+			if (smaller.compareTo(following) >0) {
 				smaller = following;
 			}
 			following = following.getNextClan();
@@ -164,7 +164,14 @@ public class Clan implements Serializable, Comparable<Clan> {
 	
 	
 	public String printNinjasOrganized() {
+		long first1 = System.nanoTime();
 		ninjasSortedSelection();
+		long second2 = System.nanoTime();
+		long finalT2 = second2- first1;
+		System.out.println("Time for sorting ninjas in nanoseconds: "+finalT2);
+		System.out.println();
+		
+		
 		String everything = "";
 		
 		Ninja match = getFirst();
@@ -182,24 +189,38 @@ public class Clan implements Serializable, Comparable<Clan> {
 	}
 
 	public void ninjasSortedSelection() {
-		Ninja match = getLastNinja();
-		Ninja firstN = getFirst();
 		
-		while(match != null ) {
-			
+		
+		int i = countNodes();
+		while(i >=0 ) {
+			Ninja firstN = getFirst();
+			Ninja following = null;
 			while(firstN != null) {
-				if(firstN.getNextNinja() != null && firstN.compareTo(firstN.getNextNinja()) > 0) {
-					switchPositions(firstN, firstN.getNextNinja());
+				following = firstN.getNextNinja();
+				if(following != null && firstN.compareTo(following) > 0) {
+					switchPositions(firstN, following);
 				}
 				
 				firstN = firstN.getNextNinja();
 			}
 			
 					
-			match = match.getPriorNinja();
+			i--;
 		}
 			
 			
+	}
+	
+	public int countNodes() {
+		Ninja firstN = getFirst();
+		
+		int value = 0;
+		
+		while(firstN != null) {
+			++value;
+			firstN = firstN.getNextNinja();
+		}
+		return value;
 	}
 	
 	public void switchPositions(Ninja match, Ninja smaller) {

@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 22 SEPTEMBER 2019
+* @LAST UPDATE DATE: 24 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -71,8 +71,8 @@ public class Investor {
 	}
 	
 	public void saveChanges() throws FileNotFoundException, IOException {
-		File file = null;
-		file = new File(LOCATION);
+		File file = new File(LOCATION);
+		
 		
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
 		oos.writeObject(getFirstClan());
@@ -176,7 +176,13 @@ public class Investor {
 	}
 
 	public String printClansOrganized() {
+		long first1 = System.nanoTime();
 		clansSortedSelection();
+		long second2 = System.nanoTime();
+		long finalT2 = second2- first1;
+		System.out.println("Time for sorting clans in nanoseconds: "+finalT2);
+		System.out.println();
+		
 		String everything = "";
 		
 		Clan match = getFirstClan();

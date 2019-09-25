@@ -11,6 +11,8 @@
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.GregorianCalendar;
+
 import org.junit.jupiter.api.Test;
 import model.*;
 
@@ -53,17 +55,11 @@ Ninja ninja;
 	void testGetLast() {
 		setupStage();
 		
-			assertTrue(getLastJutsu().getName().equalsIgnoreCase("Rasengan")); 
+			assertTrue(ninja.getLastJutsu().getName().equalsIgnoreCase("Rasengan")); 
 		
 	}
 	
-	@Test
-	void testLocate() {
-		setupStage();
-		
-			 
-		
-	}
+	
 	
 	
 	//TESTS WHEN IT IS REGULAR
@@ -72,15 +68,7 @@ Ninja ninja;
 	void testGetLast1() {
 		setupStage1();
 		
-			assertTrue(getLastJutsu().getName().equalsIgnoreCase("Sexy")); 
-		
-	}
-	
-	@Test
-	void testLocate1() {
-		setupStage();
-		
-			 
+			assertTrue(ninja.getLastJutsu().getName().equalsIgnoreCase("Sexy")); 
 		
 	}
 	
@@ -90,19 +78,13 @@ Ninja ninja;
 	@Test
 	void testGetLast2() {
 		setupStage2();
-		if (getLastJutsu != null) {
-			assertFalse(getLastJutsu().getName().equalsIgnoreCase("Sexy"));
+		if (ninja.getLastJutsu() != null) {
+			assertFalse(ninja.getLastJutsu().getName().equalsIgnoreCase("Sexy"));
 		}
 			 
 		
 	}
 	
-	@Test
-	void testLocate() {
-		setupStage2();
-		
-			 
-		
-	}
+
 	
 } //end of class

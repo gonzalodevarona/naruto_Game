@@ -5,7 +5,7 @@
 * DEPARTAMENTO TIC - ALGORTIMOS Y PROGRAMACIÓN II
 * LAB III
 * @AUTHOR: GONZALO DE VARONA <gonzalo.de1@correo.icesi.edu.co>
-* @LAST UPDATE DATE: 22 SEPTEMBER 2019
+* @LAST UPDATE DATE: 24 SEPTEMBER 2019
 * ˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜˜
 */
 
@@ -195,33 +195,6 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 		} else {getLastJutsu().setNext(newJutsu);}
 		
 	}
-
-//	public String printJutsusOrganized() {
-//		
-//		jutsusSortedInsertion();
-//		String everything = "";
-//		
-//		Jutsu match = getFirstJutsu();
-//		
-//		if (match == null) {
-//			everything = "ERROR: There are 0 jutsus";
-//		}
-//		
-//		while(match != null ) {
-//			everything += match.toString();
-//			
-//			match = match.getNext();
-//			
-//			
-//		}
-//		
-//		return everything;
-//	}
-
-//	public void jutsusSortedInsertion() {
-//		
-//		
-//	}
 	
 	
 	public Ninja clone() {
@@ -238,6 +211,68 @@ public class Ninja implements Serializable, Comparable<Ninja> {
 		
 		
 		return other;
+	}
+
+	public String printJutsusOrganized() {
+		long first1 = System.nanoTime();
+		sortJutsus();
+		long second2 = System.nanoTime();
+		long finalT2 = second2- first1;
+		System.out.println("Time for sorting jutsus in nanoseconds: "+finalT2);
+		System.out.println();
+		
+		String everything = "";
+		
+		Jutsu match = getFirstJutsu();
+		
+		if (match == null) {
+			everything = "ERROR: This ninja does not have any jutsus";
+		}
+		
+		while(match != null ) {
+			everything += match.toString();	
+			match = match.getNext();
+		}
+		
+		return everything;
+		
+	}
+	
+	public void sortJutsus() {
+		Jutsu match = getFirstJutsu();
+		Jutsu priorJ = null;
+		Jutsu nextMatch = null;
+		
+		while(match != null ) {
+			 nextMatch = match.getNext();
+			 
+			 
+				 priorJ = match;
+			
+				while(priorJ != null) {
+					if(nextMatch != null && priorJ.compare(priorJ,nextMatch) > 0) {
+						switchPositions(priorJ, nextMatch);
+					}
+					
+					priorJ = findPrior(priorJ);
+				}
+			 
+			
+					
+			match = nextMatch;
+		}
+	}
+
+	public void switchPositions(Jutsu priorJ, Jutsu nextMatch) {
+		Jutsu tempJ = priorJ.clone();
+		Jutsu tempM = nextMatch.clone();
+		
+		priorJ.setName(tempM.getName());
+		priorJ.setFactor(tempM.getFactor());
+		
+		nextMatch.setName(tempJ.getName());
+		nextMatch.setFactor(tempJ.getFactor());
+		
 	}
 	
 	
